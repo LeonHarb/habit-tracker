@@ -1,0 +1,338 @@
+body{
+    font-family: 'Segoe UI', Tahoma;
+    margin: 0;
+    background: #f7f9fc;
+    color: #333;
+
+}
+
+.app{
+    display: flex;
+    flex-direction: column;
+}
+
+.username{
+    margin-bottom: 2%;
+}
+
+
+header{
+    padding: 20px;
+}
+
+.summary{
+    padding-left: 70%;
+
+}
+
+
+.controls{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    
+}
+
+.time-range{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+.time-range button{
+    margin-right: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+
+.time-range button.create-account-button{
+    background: #007bff;
+    color: white;
+}
+
+
+.add-habit {
+  display: block !important;
+  position: relative !important;
+  z-index: 999 !important;
+  margin-right: 80%;
+
+
+  background:  #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.week-view{
+    padding: 10px 20px;
+}
+
+.progress-bar{
+    background: #ddd;
+    height: 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+
+
+.progress-bar .fill{
+    background: #4caf50;
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+
+.habit-grid{
+    display: grid;
+    grid-template-columns: 150px repeat(7,120px);
+    gap: 12px;
+    padding: 20px;
+    margin-left: 80px;
+}
+
+
+.habit-label{
+    font-weight: bold;
+    line-height: 40px;
+}
+
+
+.grid-cell{
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 8px;
+    background-color: #eee;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+
+.grid-cell.completed{
+    background-color:  #4caf50;
+    color: white;
+}
+
+aside.day-details{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    background: white;
+    border-left: 1px solid #ddd;
+    padding: 20px;
+    height: 100%;
+}
+
+.habit-card{
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgb(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+
+.modal-content{
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.modal-content h2{
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: #333;
+}
+
+.modal-content label {
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: bold; 
+    color: #555;
+}
+
+/* .modal-content input{
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+} */
+
+
+.modal-content input{
+    width: calc(100% - 16px); /* Full width minus padding */
+    padding: 10px 8px; /* Slightly more vertical padding */
+    margin-bottom: 20px; /* Space below the input */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Rounded corners for input */
+    box-sizing: border-box; /* Include padding and border in width */
+    font-size: 1em;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+
+.modal-content h3 {
+    margin-top: 25px; /* Space above frequency section */
+    margin-bottom: 15px; /* Space below frequency heading */
+    font-size: 1.2em;
+    color: #333;
+}
+
+
+.frequency-options {
+    display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap to next line */
+    gap: 8px; /* Space between buttons */
+    margin-bottom: 20px; /* Space below day buttons */
+}
+
+
+.day-button {
+    flex-grow: 1; /* Allow buttons to grow and fill space */
+    flex-basis: calc(100% / 7 - 8px); /* Distribute buttons roughly evenly (adjust 8px for gap) */
+    min-width: 40px; /* Ensure a minimum width for small screens */
+    padding: 10px 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #666;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    text-align: center; /* Center text within buttons */
+}
+
+
+.day-button:hover {
+    background-color: #eee;
+    border-color: #bbb;
+}
+
+.day-button.selected {
+    background-color: #007bff; /* Primary blue color */
+    color: white;
+    border-color: #007bff;
+}
+
+/* Frequency presets container */
+.frequency-presets {
+    display: flex;
+    gap: 10px; /* Space between preset buttons */
+    margin-bottom: 30px; /* Space below preset buttons */
+}
+
+
+/* Preset buttons */
+.preset-button {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-size: 1em;
+    color: #555;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.preset-button:hover {
+    background-color: #e0e0e0;
+    border-color: #ccc;
+}
+
+
+
+/* Style for selected preset button (requires JavaScript) */
+.preset-button.selected {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* Modal action buttons container */
+.modal-button { /* Changed from .modal-buttons to match your HTML */
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px; /* Space above buttons */
+}
+
+
+
+/* General button styling */
+.modal-button button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+/* "Add" (Submit) button */
+.modal-button button[type="submit"] {
+    background-color: #007bff; /* Primary blue */
+    color: white;
+}
+
+.modal-button button[type="submit"]:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* "Cancel" button */
+.modal-button #closeModal {
+    background-color: #f0f0f0; /* Light grey */
+    color: #555;
+    border: 1px solid #ddd; /* Light border */
+}
+
+.modal-button #closeModal:hover {
+    background-color: #e0e0e0;
+}
+
+

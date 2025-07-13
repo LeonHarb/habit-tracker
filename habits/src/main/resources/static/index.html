@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Habit Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header>
+
+
+            <div class="username">
+                <h1>Good Afternoon, Mike</h1>
+            </div>
+
+            <div class="controls">
+                <div class="time-range">
+                    <button class="create-account-button">Create Account</button>
+                </div>
+
+                <button class="add-habit">+ Add Habit</button>
+            </div>
+        </header>
+
+        <section class="progress">
+            <div class="progress-bar">
+                <div class="fill" id="progress-fill"></div>
+            </div>
+
+            <p class="summary"><strong id="summary-text"></strong></p>
+        </section>
+
+        <section class="habit-grid" id="habit-grid"></section>
+
+        <aside class="day-details" id="day-details">
+            <div class="habit-card-list" id="habitCardList"></div>
+        </aside>
+
+        
+
+        <div class="modal" id="habitModal">
+            <div class="modal-content">
+                <h2>Add New Habit</h2>
+                <form id="habitForm">
+                    <label for="habitName">Habit Name:</label>
+                    <input type="text" id="habitName" required />
+
+
+                    <h3>Weekly Frequency</h3>
+                    <div class="frequency-options">
+                        <button type="button" class="day-button" data-day="mon">Mon</button>
+                        <button type="button" class="day-button" data-day="tue">Tue</button>
+                        <button type="button" class="day-button" data-day="wed">Wed</button>
+                        <button type="button" class="day-button" data-day="thu">Thu</button>
+                        <button type="button" class="day-button" data-day="fri">Fri</button>
+                        <button type="button" class="day-button" data-day="sat">Sat</button>
+                        <button type="button" class="day-button" data-day="sun">Sun</button>
+                    </div>
+
+                    <div class="frequency-presets">
+                        <button type="button" class="preset-button" data-preset="weekdays">Week days</button>
+                        <button type="button" class="preset-button" data-preset="everyday">Every day</button>
+                    </div>
+
+
+
+
+                    <div class="modal-button">
+                        <button type="submit">Add</button>
+                        <button type="button" id="closeModal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+         <div class="modal" id="accountModal">
+            <div class="modal-content">
+                <h2>Create Account</h2>
+                <form id="accountForm">
+                    <label for="habitName">Username:</label>
+                    <input type="text" id="username" required />
+
+
+                    <label for="habitName">Password:</label>
+                    <input type="text" id="password" required />
+
+
+                    <div class="modal-button">
+                        <button type="submit">Create Account</button>
+                        <button type="button" id="accountCloseModal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
