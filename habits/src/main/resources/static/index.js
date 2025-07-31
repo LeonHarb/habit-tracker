@@ -302,7 +302,8 @@ document.getElementById("habitForm").addEventListener("submit", function(e){
         this.reset();
         document.getElementById("habitModal").style.display= "none";
 
-        //buildGrid();
+
+        
         updateProgress();
         updateSidebar();
     })
