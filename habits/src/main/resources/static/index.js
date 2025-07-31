@@ -1,11 +1,7 @@
 const habits = [
-  { name: "Exercise", color: "#2196F3" },
-  { name: "Journal", color: "#9C27B0" },
-  { name: "Alcohol", color: "#E91E63" },
-  { name: "Cold Shower", color: "#03A9F4" },
-  { name: "Floss", color: "#4CAF50" },
-  { name: "Meditate", color: "#FF9800" },
-  { name: "eBook", color: "#00BCD4" }
+  { title: "Exercise", color: "#2196F3" },
+  { title: "Journal", color: "#9C27B0" },
+  
 ];
 
 
@@ -13,6 +9,25 @@ const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 let progress= 0;
 const gridData= {};
 const tracking= {};
+let habitToEditIndex = null;
+let habitToDeleteIndex = null;
+
+//GET all habits
+function loadHabits(){
+    fetch("http://localhost:8080/api/habits")
+        .then(response => response.json())
+        .then(data =>{
+            habits.push(...data);
+            buildGrid();
+            updateProgress();
+            updateSidebar();
+        })
+        .catch(error =>{
+            alert("Error loading habits:", error);
+        });
+}
+
+window.onload= loadHabits;
 
 function buildGrid(){
 
@@ -32,12 +47,37 @@ function buildGrid(){
 
 
     habits.forEach((habit , habitIndex) =>{
-        const label= document.createElement("div");
-        label.className= "habit-label";
-        label.textContent= habit.name;
-        grid.append(label);
-
+        const labelWrapper= document.createElement("div");
+        labelWrapper.className= "habit-label habit-label-with-delete";
         
+        const label= document.createElement("span");
+        label.textContent= habit.title;
+
+        const deleteBtn= document.createElement("button");
+        deleteBtn.textContent= "🗑️";
+        deleteBtn.className= "delete-habit-button";
+        deleteBtn.title= "Delete Habit";
+        deleteBtn.addEventListener("click", (e)=>{
+            e.stopPropagation();
+            deleteHabit(habitIndex);
+        });
+
+
+        const editBtn= document.createElement("button");
+        editBtn.innerHTML= "✏️";
+        editBtn.className= "edit-habit-button";
+        editBtn.title= "Edit Habit";
+        editBtn.addEventListener("click", (e)=>{
+            e.stopPropagation();
+            updateHabit(habitIndex);
+            
+        });
+
+
+        labelWrapper.appendChild(label);
+        labelWrapper.appendChild(editBtn);
+        labelWrapper.appendChild(deleteBtn);
+        grid.appendChild(labelWrapper);
 
 
         for(let i=0; i<7; i++){
@@ -50,6 +90,8 @@ function buildGrid(){
             cell.addEventListener("click" , ()=> toggleCell(cell, habit, key));
             grid.append(cell);
         }
+
+        
     });
 
 
@@ -77,6 +119,52 @@ function toggleCell(cell, habit, key){
 }
 
 
+function deleteHabit(index){
+    habitToDeleteIndex = index;
+    document.getElementById("deleteConfirmModal").style.display = "block";
+}
+
+
+//DELETE habit
+document.getElementById("confirmDeleteBtn").addEventListener("click", async function() {
+    const habit= habits[habitToDeleteIndex];
+    const id= habit.id;
+
+    try {
+        const response= await fetch(`http://localhost:8080/api/habits/${id}`, {
+            method: "DELETE"
+        });
+
+        if(response.ok){
+            habits.splice(habitToDeleteIndex, 1);
+            buildGrid();
+            updateProgress();
+            updateSidebar();
+        }else{
+            alert("Failed to delete habit");
+        }
+    } catch (error) {
+        console.error("Error deleting habit:", error);
+        alert("Error deleting habit");
+    }
+    document.getElementById("deleteConfirmModal").style.display = "none";
+});
+
+
+document.getElementById("cancelDeleteBtn").addEventListener("click", function() {
+    document.getElementById("deleteConfirmModal").style.display = "none";
+});
+
+
+function updateHabit(index){
+    habitToEditIndex= index;
+    const habit= habits[index];
+
+    document.getElementById("editHabitName").value = habit.title;
+    document.getElementById("editHabitDesc").value = habit.description || "";
+    document.getElementById("editHabitModal").style.display = "block";
+}
+
 
 function updateProgress(){
     const total= habits.length * 7;
@@ -89,6 +177,53 @@ function updateProgress(){
 }
 
 
+//PUT UPDATE habit
+document.getElementById("editHabitForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("editHabitName").value.trim();
+    const description = document.getElementById("editHabitDesc").value.trim();
+
+    if (!name || !description) return;
+
+    const habit = habits[habitToEditIndex];
+
+    try {
+        const response= await fetch(`http://localhost:8080/api/habits/${habit.id}`,{
+            method: "PUT",
+            headers:{
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                title: name,
+                description: description
+            })
+        });
+
+
+        if(response.ok){
+            const updateHabit= await response.json();
+            habits[habitToEditIndex]= updateHabit;
+            buildGrid();
+            updateProgress();
+            updateSidebar();
+        }else{
+            alert("Failed to update habit");
+        }
+    } catch (error) {
+        alert("Error while updating habit.");
+    }
+
+    document.getElementById("editHabitModal").style.display = "none";
+
+});
+
+document.getElementById("cancelEditHabit").addEventListener("click", function() {
+    document.getElementById("editHabitModal").style.display = "none";
+});
+
+
 
 function updateSidebar(){
     const cardList= document.getElementById("habitCardList");
@@ -97,13 +232,12 @@ function updateSidebar(){
     for(let i=0; i<habits.length; i++){
         const habit= habits[i];
         const key= `${i}-1`;
-        const completed= !!gridData[key];
 
         const card= document.createElement("div");
         card.className= "habit-card";
         card.innerHTML=`
             <strong>${habit.name}</strong><br>
-            Status: ${completed ? "✅ Completed" : "❌ Incomplete" }
+            Status: ${"✅ Completed" + "❌ Incomplete" }
         `;
 
         cardList.append(card);
@@ -134,106 +268,101 @@ document.getElementById("accountCloseModal").addEventListener("click", ()=>{
 });
 
 
+
+//POST Create new Habit
 document.getElementById("habitForm").addEventListener("submit", function(e){
 
     e.preventDefault();
 
     const name= document.getElementById("habitName").value.trim();
+    const description= document.getElementById("habitDesc").value.trim();
 
+    if(!name || !description) return;
 
-    if(!name) return;
+    const habitData= {name, description};
 
-    habits.push({name});
+    fetch("http://localhost:8080/api/habits",{
+        method: "POST",
+        headers:{
+            "Content-Type" : "application/json"
+        },
 
-    this.reset();
-    document.getElementById("habitModal").style.display= "none";
+        body: JSON.stringify(habitData)
+    })
+    .then(response =>{
+        if(!response.ok){
+            throw new Error("Failed to save habit");
+        }
+        return response.json();
+    })
+    .then(data =>{
+        console.log("Habit saved:", data);
+        habits.push(data);
 
-    buildGrid();
-    updateProgress();
-    updateSidebar();
+        this.reset();
+        document.getElementById("habitModal").style.display= "none";
 
-});
-
-
-
-document.addEventListener('DOMContentLoaded', ()=>{
-
-    const dayBtn= document.querySelectorAll('.day-button');
-    const presetBtn= document.querySelectorAll('.preset-button');
-
-    dayBtn.forEach(button =>{
-        button.addEventListener("click", ()=>{
-            button.classList.toggle('selected');
-
-
-            if(button.classList.contains('selected')){
-                presetBtn.forEach(presetButton =>{
-                    presetButton.classList.remove('selected');
-                });
-            }
-        });
-    });
-
-
-    presetBtn.forEach(button =>{
-        button.addEventListener("click", ()=>{
-            dayBtn.forEach(dayButton =>{
-                dayButton.classList.remove('selected');
-            });
-
-
-            presetBtn.forEach(presetButton =>{
-                presetButton.classList.remove('selected');
-            });
-
-            button.classList.add('selected');
-
-            if(button.dataset.preset === 'weekdays'){
-                dayBtn.forEach(dayBtn =>{
-                    const day= dayBtn.dataset.day;
-
-                    if(['mon', 'tue', 'wed', 'thu', 'fri'].includes(day)){
-                        dayBtn.classList.add('selected');
-                    }
-                });
-            }else if(button.dataset.preset === 'everyday'){
-                dayBtn.forEach(dayButton =>{
-                    dayButton.classList.add('selected');
-                });
-            }
-
-
-
-        });
-    });
-
-
-    habitForm.addEventListener('submit', (e)=>{
-        e.preventDefault();
-
-        const habitName= document.getElementById('habitName').value;
-        const selectedDays= [];
-
-        dayBtn.forEach(button =>{
-            if(button.classList.contains('selected')){
-                selectedDays.push(button.dataset.day);
-            }
-        });
-
-        console.log('Habit Name:', habitName);
-        console.log('Selected Days:', selectedDays);
-
-        // Here you would typically send this data to a server or store it locally
-
-
-
-        habitModal.style.display = 'none';
-        habitForm.reset();
-        dayBtn.forEach(btn => btn.classList.remove('selected'));
-        presetBtn.forEach(btn => btn.classList.remove('selected'));
+        buildGrid();
+        updateProgress();
+        updateSidebar();
+    })
+    .catch(error =>{
+        console.error("Error saving habit:" , error);
+        alert("Failed to save habit");
     });
 
 });
+
+
+
+// document.addEventListener('DOMContentLoaded', ()=>{
+
+//     const dayBtn= document.querySelectorAll('.day-button');
+//     const presetBtn= document.querySelectorAll('.preset-button');
+
+//     dayBtn.forEach(button =>{
+//         button.addEventListener("click", ()=>{
+//             button.classList.toggle('selected');
+
+
+//             if(button.classList.contains('selected')){
+//                 presetBtn.forEach(presetButton =>{
+//                     presetButton.classList.remove('selected');
+//                 });
+//             }
+//         });
+//     });
+
+
+//     presetBtn.forEach(button =>{
+//         button.addEventListener("click", ()=>{
+//             dayBtn.forEach(dayButton =>{
+//                 dayButton.classList.remove('selected');
+//             });
+
+
+//             presetBtn.forEach(presetButton =>{
+//                 presetButton.classList.remove('selected');
+//             });
+
+//             button.classList.add('selected');
+
+//             if(button.dataset.preset === 'weekdays'){
+//                 dayBtn.forEach(dayBtn =>{
+//                     const day= dayBtn.dataset.day;
+
+//                     if(['mon', 'tue', 'wed', 'thu', 'fri'].includes(day)){
+//                         dayBtn.classList.add('selected');
+//                     }
+//                 });
+//             }else if(button.dataset.preset === 'everyday'){
+//                 dayBtn.forEach(dayButton =>{
+//                     dayButton.classList.add('selected');
+//                 });
+//             }
+//         });
+//     });
+// });
 
 
 

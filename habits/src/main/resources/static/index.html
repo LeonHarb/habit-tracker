@@ -11,8 +11,8 @@
         <header>
 
 
-            <div class="username">
-                <h1>Good Afternoon, Mike</h1>
+            <div class="title">
+                <h1>Habit Tracker</h1>
             </div>
 
             <div class="controls">
@@ -47,25 +47,8 @@
                     <label for="habitName">Habit Name:</label>
                     <input type="text" id="habitName" required />
 
-
-                    <h3>Weekly Frequency</h3>
-                    <div class="frequency-options">
-                        <button type="button" class="day-button" data-day="mon">Mon</button>
-                        <button type="button" class="day-button" data-day="tue">Tue</button>
-                        <button type="button" class="day-button" data-day="wed">Wed</button>
-                        <button type="button" class="day-button" data-day="thu">Thu</button>
-                        <button type="button" class="day-button" data-day="fri">Fri</button>
-                        <button type="button" class="day-button" data-day="sat">Sat</button>
-                        <button type="button" class="day-button" data-day="sun">Sun</button>
-                    </div>
-
-                    <div class="frequency-presets">
-                        <button type="button" class="preset-button" data-preset="weekdays">Week days</button>
-                        <button type="button" class="preset-button" data-preset="everyday">Every day</button>
-                    </div>
-
-
-
+                    <label for="habitDesc">Description:</label>
+                    <input type="text" id="habitDesc" required />
 
                     <div class="modal-button">
                         <button type="submit">Add</button>
@@ -74,6 +57,40 @@
                 </form>
             </div>
         </div>
+
+
+        <div class="modal" id="editHabitModal">
+            <div class="modal-content">
+                <h2>Edit Habit</h2>
+                <form id="editHabitForm">
+                    <label for="editHabitName">Habit Name:</label>
+                    <input type="text" id="editHabitName" required />
+
+                    <label for="editHabitDesc">Description:</label>
+                    <input type="text" id="editHabitDesc" required />
+
+                    <div class="modal-button">
+                        <button type="submit">Save</button>
+                        <button type="button" id="cancelEditHabit">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="modal" id="deleteConfirmModal">
+            <div class="modal-content">
+                <h2>Delete Habit</h2>
+                <p>Are you sure you want to delete this habit?</p>
+                <div class="modal-button">
+                    <button type="button" id="confirmDeleteBtn">Yes</button>
+                    <button type="button" id="cancelDeleteBtn">No</button>
+                </div>
+            </div>
+        </div>
+
+
+        
 
 
 

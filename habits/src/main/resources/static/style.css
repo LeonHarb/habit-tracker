@@ -11,7 +11,7 @@ body{
     flex-direction: column;
 }
 
-.username{
+.title{
     margin-bottom: 2%;
 }
 
@@ -124,6 +124,31 @@ header{
     transition: background 0.2s ease;
 }
 
+.habit-label-with-delete {
+    display: flex;
+    align-items: left;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.delete-habit-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #e74c3c;
+    padding: 0;
+}
+
+.edit-habit-button {
+    font-size: 20px;
+    margin-left: 8px;
+    background: none;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+}
+
 
 .grid-cell.completed{
     background-color:  #4caf50;
@@ -152,7 +177,7 @@ aside.day-details{
 
 
 
-.modal{
+.modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -198,12 +223,12 @@ aside.day-details{
 
 
 .modal-content input{
-    width: calc(100% - 16px); /* Full width minus padding */
-    padding: 10px 8px; /* Slightly more vertical padding */
-    margin-bottom: 20px; /* Space below the input */
-    border: 1px solid #ccc; /* Light grey border */
-    border-radius: 5px; /* Rounded corners for input */
-    box-sizing: border-box; /* Include padding and border in width */
+    width: calc(100% - 16px); 
+    padding: 10px 8px; 
+    margin-bottom: 20px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    box-sizing: border-box; 
     font-size: 1em;
 }
 
@@ -215,8 +240,8 @@ aside.day-details{
 
 
 .modal-content h3 {
-    margin-top: 25px; /* Space above frequency section */
-    margin-bottom: 15px; /* Space below frequency heading */
+    margin-top: 25px; 
+    margin-bottom: 15px; 
     font-size: 1.2em;
     color: #333;
 }
@@ -224,16 +249,16 @@ aside.day-details{
 
 .frequency-options {
     display: flex;
-    flex-wrap: wrap; /* Allow buttons to wrap to next line */
-    gap: 8px; /* Space between buttons */
-    margin-bottom: 20px; /* Space below day buttons */
+    flex-wrap: wrap; 
+    gap: 8px; 
+    margin-bottom: 20px; 
 }
 
 
 .day-button {
-    flex-grow: 1; /* Allow buttons to grow and fill space */
-    flex-basis: calc(100% / 7 - 8px); /* Distribute buttons roughly evenly (adjust 8px for gap) */
-    min-width: 40px; /* Ensure a minimum width for small screens */
+    flex-grow: 1; 
+    flex-basis: calc(100% / 7 - 8px); 
+    min-width: 40px; 
     padding: 10px 5px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -243,7 +268,7 @@ aside.day-details{
     font-weight: 600;
     color: #666;
     transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-    text-align: center; /* Center text within buttons */
+    text-align: center; 
 }
 
 
@@ -253,20 +278,13 @@ aside.day-details{
 }
 
 .day-button.selected {
-    background-color: #007bff; /* Primary blue color */
+    background-color: #007bff; 
     color: white;
     border-color: #007bff;
 }
 
-/* Frequency presets container */
-.frequency-presets {
-    display: flex;
-    gap: 10px; /* Space between preset buttons */
-    margin-bottom: 30px; /* Space below preset buttons */
-}
 
 
-/* Preset buttons */
 .preset-button {
     flex-grow: 1;
     padding: 10px 15px;
@@ -286,19 +304,17 @@ aside.day-details{
 
 
 
-/* Style for selected preset button (requires JavaScript) */
 .preset-button.selected {
     background-color: #007bff;
     color: white;
     border-color: #007bff;
 }
 
-/* Modal action buttons container */
-.modal-button { /* Changed from .modal-buttons to match your HTML */
+.modal-button { 
     display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
-    gap: 10px; /* Space between buttons */
-    margin-top: 20px; /* Space above buttons */
+    justify-content: flex-end; 
+    gap: 10px; 
+    margin-top: 20px;
 }
 
 
@@ -314,21 +330,19 @@ aside.day-details{
     transition: background-color 0.2s, opacity 0.2s;
 }
 
-/* "Add" (Submit) button */
 .modal-button button[type="submit"] {
-    background-color: #007bff; /* Primary blue */
+    background-color: #007bff; 
     color: white;
 }
 
 .modal-button button[type="submit"]:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3; 
 }
 
-/* "Cancel" button */
 .modal-button #closeModal {
-    background-color: #f0f0f0; /* Light grey */
+    background-color: #f0f0f0; 
     color: #555;
-    border: 1px solid #ddd; /* Light border */
+    border: 1px solid #ddd; 
 }
 
 .modal-button #closeModal:hover {
