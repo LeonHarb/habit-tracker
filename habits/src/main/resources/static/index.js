@@ -1,4 +1,4 @@
-const habits = [{title : "Gym"}];
+const habits = [{title : "Gym" , description : "Every day"}];
 
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -87,7 +87,6 @@ function buildGrid(){
             grid.append(cell);
         }
 
-        
     });
 
 
@@ -98,10 +97,6 @@ function buildGrid(){
 
         grid.append(label);
     })
-
-
-    
-
 }
 
 
@@ -315,56 +310,6 @@ document.getElementById("habitForm").addEventListener("submit", function(e){
 
 });
 
-
-
-// document.addEventListener('DOMContentLoaded', ()=>{
-
-//     const dayBtn= document.querySelectorAll('.day-button');
-//     const presetBtn= document.querySelectorAll('.preset-button');
-
-//     dayBtn.forEach(button =>{
-//         button.addEventListener("click", ()=>{
-//             button.classList.toggle('selected');
-
-
-//             if(button.classList.contains('selected')){
-//                 presetBtn.forEach(presetButton =>{
-//                     presetButton.classList.remove('selected');
-//                 });
-//             }
-//         });
-//     });
-
-
-//     presetBtn.forEach(button =>{
-//         button.addEventListener("click", ()=>{
-//             dayBtn.forEach(dayButton =>{
-//                 dayButton.classList.remove('selected');
-//             });
-
-
-//             presetBtn.forEach(presetButton =>{
-//                 presetButton.classList.remove('selected');
-//             });
-
-//             button.classList.add('selected');
-
-//             if(button.dataset.preset === 'weekdays'){
-//                 dayBtn.forEach(dayBtn =>{
-//                     const day= dayBtn.dataset.day;
-
-//                     if(['mon', 'tue', 'wed', 'thu', 'fri'].includes(day)){
-//                         dayBtn.classList.add('selected');
-//                     }
-//                 });
-//             }else if(button.dataset.preset === 'everyday'){
-//                 dayBtn.forEach(dayButton =>{
-//                     dayButton.classList.add('selected');
-//                 });
-//             }
-//         });
-//     });
-// });
 
 
 
