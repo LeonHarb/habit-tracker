@@ -1,4 +1,4 @@
-const habits = [];
+const habits = [{title : "Gym"}];
 
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -205,6 +205,7 @@ document.getElementById("editHabitForm").addEventListener("submit", async functi
         if(response.ok){
             const updateHabit= await response.json();
             habits[habitToEditIndex]= updateHabit;
+
             buildGrid();
             updateProgress();
             updateSidebar();
@@ -303,7 +304,7 @@ document.getElementById("habitForm").addEventListener("submit", function(e){
         document.getElementById("habitModal").style.display= "none";
 
 
-        
+        buildGrid();
         updateProgress();
         updateSidebar();
     })
