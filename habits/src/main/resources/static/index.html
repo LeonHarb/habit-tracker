@@ -20,6 +20,9 @@
                     <button class="create-account-button">Create Account</button>
                 </div>
 
+                <button class="login">Login</button>
+
+
                 <button class="add-habit">+ Add Habit</button>
             </div>
         </header>
@@ -96,20 +99,43 @@
 
 
 
-         <div class="modal" id="accountModal">
+        <div class="modal" id="accountModal">
             <div class="modal-content">
                 <h2>Create Account</h2>
                 <form id="accountForm">
-                    <label for="habitName">Username:</label>
+                    <label for="username">Username:</label>
                     <input type="text" id="username" required />
 
 
-                    <label for="habitName">Password:</label>
-                    <input type="text" id="password" required />
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required />
 
 
                     <div class="modal-button">
                         <button type="submit">Create Account</button>
+                        <button type="button" id="accountCloseModal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+        
+        <div class="modal" id="loginAccountModal">
+            <div class="modal-content">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required />
+
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required />
+
+
+                    <div class="modal-button">
+                        <button type="submit">Login</button>
                         <button type="button" id="accountCloseModal">Cancel</button>
                     </div>
                 </form>

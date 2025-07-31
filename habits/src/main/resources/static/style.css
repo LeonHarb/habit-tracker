@@ -76,6 +76,18 @@ header{
   cursor: pointer;
 }
 
+.login{
+    background:  #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    white-space: nowrap;
+    cursor: pointer;
+
+}
+
 .week-view{
     padding: 10px 20px;
 }

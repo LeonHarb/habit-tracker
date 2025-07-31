@@ -1,4 +1,7 @@
+// const { use } = require("react");
+
 const habits = [{title : "Gym" , description : "Every day"}];
+
 
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -265,7 +268,7 @@ document.getElementById("accountCloseModal").addEventListener("click", ()=>{
 
 
 
-//POST Create new Habit
+//POST Create/Add new Habit
 document.getElementById("habitForm").addEventListener("submit", function(e){
 
     e.preventDefault();
@@ -311,19 +314,95 @@ document.getElementById("habitForm").addEventListener("submit", function(e){
 });
 
 
+//POST Create new Account (signup)
+document.getElementById("accountForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const username= document.getElementById("username").value.trim();
+    const password= document.getElementById("password").value.trim();
+
+    if(!username || !password) return;
+
+    const userData= {username , password};
 
 
-accountForm.addEventListener('submit', (e)=>{
-        e.preventDefault();
+    fetch("http://localhost:8080/api/auth/signup",{
+        method: "POST",
+        headers:{
+            "Content-Type" : "application/json"
+        },
 
-        const username= document.getElementById('username').value;
-        const password= document.getElementById('password').value;
+        body: JSON.stringify(userData)
+    })
+    .then(response =>{
+        if(!response.ok){
+            throw new Error("Failed to user");
+        }
+        return response.text();
+    })
+    .then(message =>{
+        console.log("User saved:", message);
 
-        console.log('Username:', username);
-        console.log('Pass:', password);
+        alert("Account created successfully");
 
 
-        accountForm.reset();
+        this.reset();
+        document.getElementById("accountModal").style.display= "none";
 
-        
+
+        buildGrid();
+        updateProgress();
+        updateSidebar();
+    })
+    .catch(error =>{
+        console.error("Error saving habit:" , error);
+        alert("Failed to save habit");
+    });
 });
+
+
+
+
+//POST Login Account(signin)
+document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const username= document.getElementById("username").value.trim();
+    const password= document.getElementById("password").value.trim();
+
+    if(!username || !password) return;
+
+    const userData= {username , password};
+
+
+    fetch("http://localhost:8080/api/auth/signin",{
+        method: "POST",
+        headers:{
+            "Content-Type" : "application/json"
+        },
+
+        body: JSON.stringify(userData)
+    })
+    .then(response =>{
+        if(!response.ok){
+            throw new Error("Failed to login user");
+        }
+        return response.text();
+    })
+    .then(message =>{
+        console.log("User login successfully:", message);
+
+        localStorage.setItem("loggedInUser", username);
+        
+        this.reset();
+        document.getElementById("loginAccountModal").style.display= "none";
+
+
+        buildGrid();
+        updateProgress();
+        updateSidebar();
+    })
+    .catch(error =>{
+        console.error("Error signing user:" , error);
+        alert("Failed to signin");
+    });
+});
+
