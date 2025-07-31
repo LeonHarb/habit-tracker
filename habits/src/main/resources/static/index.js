@@ -1,8 +1,4 @@
-const habits = [
-  { title: "Exercise", color: "#2196F3" },
-  { title: "Journal", color: "#9C27B0" },
-  
-];
+const habits = [];
 
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -176,6 +172,10 @@ function updateProgress(){
 
 }
 
+// function updateGrid(){
+//     document.getElementById
+// }
+
 
 //PUT UPDATE habit
 document.getElementById("editHabitForm").addEventListener("submit", async function(e) {
@@ -302,7 +302,7 @@ document.getElementById("habitForm").addEventListener("submit", function(e){
         this.reset();
         document.getElementById("habitModal").style.display= "none";
 
-        buildGrid();
+        //buildGrid();
         updateProgress();
         updateSidebar();
     })
