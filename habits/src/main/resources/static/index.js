@@ -236,7 +236,7 @@ function updateSidebar(){
         const card= document.createElement("div");
         card.className= "habit-card";
         card.innerHTML=`
-            <strong>${habit.name}</strong><br>
+            <strong>${habit.title}</strong><br>
             Status: ${"✅ Completed" + "❌ Incomplete" }
         `;
 
@@ -274,12 +274,12 @@ document.getElementById("habitForm").addEventListener("submit", function(e){
 
     e.preventDefault();
 
-    const name= document.getElementById("habitName").value.trim();
+    const title= document.getElementById("habitName").value.trim();
     const description= document.getElementById("habitDesc").value.trim();
 
-    if(!name || !description) return;
+    if(!title || !description) return;
 
-    const habitData= {name, description};
+    const habitData= {title, description};
 
     fetch("http://localhost:8080/api/habits",{
         method: "POST",
