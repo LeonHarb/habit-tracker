@@ -1,7 +1,4 @@
-// const { use } = require("react");
-
 const habits = [{title : "Gym" , description : "Every day"}];
-
 
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -259,11 +256,19 @@ document.querySelector(".create-account-button").addEventListener("click", ()=>{
     document.getElementById("accountModal").style.display= "flex";
 });
 
+document.querySelector(".login-account-button").addEventListener("click", ()=>{
+    document.getElementById("loginAccountModal").style.display= "flex";
+});
+
 document.getElementById("closeModal").addEventListener("click", ()=>{
     document.getElementById("habitModal").style.display= "none";
 });
 document.getElementById("accountCloseModal").addEventListener("click", ()=>{
     document.getElementById("accountModal").style.display= "none";
+});
+
+document.getElementById("loginAccountCloseModal").addEventListener("click", ()=>{
+    document.getElementById("loginAccountModal").style.display= "none";
 });
 
 
@@ -335,7 +340,7 @@ document.getElementById("accountForm").addEventListener("submit", function(e){
     })
     .then(response =>{
         if(!response.ok){
-            throw new Error("Failed to user");
+            throw new Error("Failed to create new account");
         }
         return response.text();
     })
@@ -388,7 +393,7 @@ document.getElementById("loginForm").addEventListener("submit", function(e){
         return response.text();
     })
     .then(message =>{
-        console.log("User login successfully:", message);
+        console.log("User logged in successfully:", message);
 
         localStorage.setItem("loggedInUser", username);
         
