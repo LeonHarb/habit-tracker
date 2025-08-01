@@ -23,7 +23,23 @@ function loadHabits(){
         });
 }
 
-window.onload= loadHabits;
+
+function updateGreeting() {
+    const greetingDiv = document.getElementById("greeting");
+    const username = localStorage.getItem("loggedInUser");
+    if (username) {
+        greetingDiv.textContent = `Welcome, ${username}`;
+        greetingDiv.style.display = "inline-block";
+    } else {
+        greetingDiv.textContent = "";
+        greetingDiv.style.display = "none";
+    }
+}
+
+window.onload = function() {
+    loadHabits();   
+    updateGreeting();
+};
 
 function buildGrid(){
 
@@ -141,7 +157,7 @@ document.getElementById("confirmDeleteBtn").addEventListener("click", async func
                     delete gridData[key];
                 }
             });
-            
+
             buildGrid();
             updateProgress();
             updateSidebar();
@@ -360,13 +376,14 @@ document.getElementById("accountForm").addEventListener("submit", function(e){
     })
     .then(message =>{
         console.log("User saved:", message);
-
         alert("Account created successfully");
 
+        localStorage.setItem("loggedInUser", username);
 
         this.reset();
         document.getElementById("accountModal").style.display= "none";
 
+        updateGreeting();
 
         buildGrid();
         updateProgress();
@@ -414,6 +431,7 @@ document.getElementById("loginForm").addEventListener("submit", function(e){
         this.reset();
         document.getElementById("loginAccountModal").style.display= "none";
 
+        updateGreeting();
 
         buildGrid();
         updateProgress();
