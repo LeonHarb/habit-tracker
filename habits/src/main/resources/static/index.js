@@ -77,11 +77,17 @@ function buildGrid(){
 
 
         for(let i=0; i<7; i++){
-            const key= `${habitIndex} - ${i}`;
+            //const key= `${habitIndex} - ${i}`;
+            const key= `${habit.id} - ${i}`;
             const cell= document.createElement("div");
             cell.className= "grid-cell";
-            cell.dataset.habitIndex= habitIndex;
+            //cell.dataset.habitIndex= habitIndex;
+            cell.dataset.habitId= habit.id;
             cell.dataset.dayIndex= i;
+
+            if (gridData[key]) {
+                cell.classList.add("completed");
+            }
 
             cell.addEventListener("click" , ()=> toggleCell(cell, habit, key));
             grid.append(cell);
@@ -128,6 +134,14 @@ document.getElementById("confirmDeleteBtn").addEventListener("click", async func
 
         if(response.ok){
             habits.splice(habitToDeleteIndex, 1);
+
+            // Clean up gridData for deleted habit
+            Object.keys(gridData).forEach(key => {
+                if (key.startsWith(`${id}-`)) {
+                    delete gridData[key];
+                }
+            });
+            
             buildGrid();
             updateProgress();
             updateSidebar();
