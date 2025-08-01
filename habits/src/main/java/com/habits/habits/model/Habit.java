@@ -12,19 +12,45 @@ public class Habit {
     private String title;
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)  // Foreign key column in 'habit' table
+    private User user;
+
+    // Constructors
     public Habit() {}
 
-    public Habit(String title, String description) {
+    public Habit(String title, String description, User user) {
         this.title = title;
+        this.description = description;
+        this.user = user;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    // Getters and setters
-    public Long getId() { return id; }
+    public User getUser() {
+        return user;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

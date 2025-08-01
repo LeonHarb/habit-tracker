@@ -1,6 +1,8 @@
 package com.habits.habits.model;
 
-import jakarta.persistence.*; // or use javax.persistence.* depending on your setup
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -15,6 +17,9 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Habit> habits = new ArrayList<>();
 
     // Constructors
     public User() {}
@@ -37,6 +42,10 @@ public class User {
         return password;
     }
 
+    public List<Habit> getHabits() {
+        return habits;
+    }
+
     // Setters
     public void setId(Long id) {
         this.id = id;
@@ -50,5 +59,18 @@ public class User {
         this.password = password;
     }
 
-    // Optionally add toString(), equals(), and hashCode() if needed
+    public void setHabits(List<Habit> habits) {
+        this.habits = habits;
+    }
+
+    // Optional: helper methods to manage habits
+    public void addHabit(Habit habit) {
+        habits.add(habit);
+        habit.setUser(this);
+    }
+
+    public void removeHabit(Habit habit) {
+        habits.remove(habit);
+        habit.setUser(null);
+    }
 }
