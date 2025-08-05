@@ -1,8 +1,6 @@
 package com.habits.habits.model;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -18,8 +16,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Habit> habits = new ArrayList<>();
+    // No habit list here anymore
 
     // Constructors
     public User() {}
@@ -42,10 +39,6 @@ public class User {
         return password;
     }
 
-    public List<Habit> getHabits() {
-        return habits;
-    }
-
     // Setters
     public void setId(Long id) {
         this.id = id;
@@ -57,20 +50,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setHabits(List<Habit> habits) {
-        this.habits = habits;
-    }
-
-    // Optional: helper methods to manage habits
-    public void addHabit(Habit habit) {
-        habits.add(habit);
-        habit.setUser(this);
-    }
-
-    public void removeHabit(Habit habit) {
-        habits.remove(habit);
-        habit.setUser(null);
     }
 }

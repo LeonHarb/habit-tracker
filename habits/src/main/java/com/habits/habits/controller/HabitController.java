@@ -1,9 +1,7 @@
 package com.habits.habits.controller;
 
 import com.habits.habits.model.Habit;
-import com.habits.habits.model.User;
 import com.habits.habits.repository.HabitRepository;
-import com.habits.habits.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,30 +11,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/habits")
-@CrossOrigin(origins = "*") // Allow all frontend origins
+@CrossOrigin(origins = "*")
 public class HabitController {
 
     @Autowired
     private HabitRepository habitRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
     // Get all habits
     @GetMapping
     public List<Habit> getAllHabits() {
         return habitRepository.findAll();
-    }
-
-    // Get habits by user ID
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Habit>> getHabitsByUserId(@PathVariable Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        List<Habit> userHabits = habitRepository.findByUserId(userId);
-        return ResponseEntity.ok(userHabits);
     }
 
     // Get habit by ID
@@ -46,14 +30,9 @@ public class HabitController {
         return habit.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Create habit for a specific user
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<Habit> createHabit(@PathVariable Long userId, @RequestBody Habit habit) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-        habit.setUser(user.get());
+    // Create habit
+    @PostMapping
+    public ResponseEntity<Habit> createHabit(@RequestBody Habit habit) {
         Habit savedHabit = habitRepository.save(habit);
         return ResponseEntity.ok(savedHabit);
     }

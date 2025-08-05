@@ -1,7 +1,5 @@
 package com.habits.habits.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -14,18 +12,12 @@ public class Habit {
     private String title;
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)  // Foreign key column in 'habit' table
-    @JsonIgnore
-    private User user;
-
     // Constructors
     public Habit() {}
 
-    public Habit(String title, String description, User user) {
+    public Habit(String title, String description) {
         this.title = title;
         this.description = description;
-        this.user = user;
     }
 
     // Getters and Setters
@@ -47,13 +39,5 @@ public class Habit {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
