@@ -11,13 +11,10 @@ let habitToDeleteIndex = null;
 
 //GET all habits
 function loadHabits(){
-    const userId = localStorage.getItem("loggedInUserId");
-    if (!userId) return;
-
-    fetch(`http://localhost:8080/api/habits/user/${userId}`)
+  
+    fetch("http://localhost:8080/api/habits")
         .then(response => response.json())
         .then(data =>{
-            habits.length = 0; 
             habits.push(...data);
             buildGrid();
             updateProgress();
@@ -42,7 +39,7 @@ function updateGreeting() {
 }
 
 window.onload = function() {
-    //loadHabits();   
+    loadHabits();   
     updateGreeting();
 };
 
@@ -310,14 +307,11 @@ document.getElementById("habitForm").addEventListener("submit", function(e){
     const title= document.getElementById("habitName").value.trim();
     const description= document.getElementById("habitDesc").value.trim();
 
-    const userId = localStorage.getItem("loggedInUserId");
-    if (!userId) return;
-
     if(!title || !description) return;
 
     const habitData= {title, description};
 
-    fetch(`http://localhost:8080/api/habits/user/${userId}`,{
+    fetch("http://localhost:8080/api/habits",{
         method: "POST",
         headers:{
             "Content-Type" : "application/json"
@@ -376,12 +370,11 @@ document.getElementById("accountForm").addEventListener("submit", function(e){
         }
         return response.text();
     })
-    .then(user =>{
-        console.log("User saved:", user);
+    .then(message =>{
+        console.log("User saved:", message);
         alert("Account created successfully");
 
-        localStorage.setItem("loggedInUser", user.username);
-        localStorage.setItem("loggedInUserId", user.id); 
+        localStorage.setItem("loggedInUser", username);
 
 
         this.reset();
@@ -389,7 +382,7 @@ document.getElementById("accountForm").addEventListener("submit", function(e){
 
         updateGreeting();
 
-        loadHabits();
+    
         buildGrid();
         updateProgress();
         updateSidebar();
@@ -428,18 +421,16 @@ document.getElementById("loginForm").addEventListener("submit", function(e){
         }
         return response.text();
     })
-    .then(user =>{
-        console.log("User logged in successfully:", user);
+    .then(message =>{
+        console.log("User logged in successfully:", message);
 
-        localStorage.setItem("loggedInUser", user.username);
-        localStorage.setItem("loggedInUserId", user.id); // Store user ID
+        localStorage.setItem("loggedInUser", username);
 
         
         this.reset();
         document.getElementById("loginAccountModal").style.display= "none";
 
         updateGreeting();
-        loadHabits();
 
         buildGrid();
         updateProgress();
