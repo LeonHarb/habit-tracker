@@ -1,5 +1,7 @@
 package com.habits.habits.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class Habit {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)  // Foreign key column in 'habit' table
+    @JsonIgnore
     private User user;
 
     // Constructors

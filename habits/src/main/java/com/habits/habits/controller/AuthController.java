@@ -6,18 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.habits.habits.model.User;
 import com.habits.habits.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*") // Allow all frontend origins (you can restrict this later)
+@CrossOrigin(origins = "*") // Allow all frontend origins
 public class AuthController {
 
     @Autowired
@@ -40,7 +36,7 @@ public class AuthController {
     public ResponseEntity<?> authenticateUser(@RequestBody User login) {
         Optional<User> userOpt = userRepository.findByUsername(login.getUsername());
         if (userOpt.isPresent() && passwordEncoder.matches(login.getPassword(), userOpt.get().getPassword())) {
-            return ResponseEntity.ok("Login successful");
+            return ResponseEntity.ok("Login successful for user: " + login.getUsername());
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
     }

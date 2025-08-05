@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/habits")
-@CrossOrigin(origins = "*") // Allow all frontend origins (adjust for production)
+@CrossOrigin(origins = "*") // Allow all frontend origins
 public class HabitController {
 
     @Autowired
@@ -51,7 +51,7 @@ public class HabitController {
     public ResponseEntity<Habit> createHabit(@PathVariable Long userId, @RequestBody Habit habit) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isEmpty()) {
-            return ResponseEntity.badRequest().build(); // 400 Bad Request if user not found
+            return ResponseEntity.badRequest().build();
         }
         habit.setUser(user.get());
         Habit savedHabit = habitRepository.save(habit);
@@ -74,7 +74,7 @@ public class HabitController {
         return ResponseEntity.ok(updatedHabit);
     }
 
-    // ✅ Delete habit
+    // Delete habit
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHabit(@PathVariable Long id) {
         if (!habitRepository.existsById(id)) {
