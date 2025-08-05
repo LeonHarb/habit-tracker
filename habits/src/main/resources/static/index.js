@@ -93,11 +93,9 @@ function buildGrid(){
 
 
         for(let i=0; i<7; i++){
-            //const key= `${habitIndex} - ${i}`;
             const key= `${habit.id} - ${i}`;
             const cell= document.createElement("div");
             cell.className= "grid-cell";
-            //cell.dataset.habitIndex= habitIndex;
             cell.dataset.habitId= habit.id;
             cell.dataset.dayIndex= i;
 
@@ -112,13 +110,13 @@ function buildGrid(){
     });
 
 
-    days.forEach((day, dayIndex) =>{
-        const label= document.createElement("div");
-        label.className= "habit-label";
-        label.textContent= day.name;
+    // days.forEach((day, dayIndex) =>{
+    //     const label= document.createElement("div");
+    //     label.className= "habit-label";
+    //     label.textContent= day.name;
 
-        grid.append(label);
-    })
+    //     grid.append(label);
+    // })
 }
 
 
@@ -196,10 +194,6 @@ function updateProgress(){
     document.getElementById("summary-text").textContent = `${progress}% achieved`;
 
 }
-
-// function updateGrid(){
-//     document.getElementById
-// }
 
 
 //PUT UPDATE habit
