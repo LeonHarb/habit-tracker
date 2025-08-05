@@ -42,7 +42,7 @@ function updateGreeting() {
 }
 
 window.onload = function() {
-    loadHabits();   
+    //loadHabits();   
     updateGreeting();
 };
 
@@ -310,11 +310,14 @@ document.getElementById("habitForm").addEventListener("submit", function(e){
     const title= document.getElementById("habitName").value.trim();
     const description= document.getElementById("habitDesc").value.trim();
 
+    const userId = localStorage.getItem("loggedInUserId");
+    if (!userId) return;
+
     if(!title || !description) return;
 
     const habitData= {title, description};
 
-    fetch("http://localhost:8080/api/habits",{
+    fetch(`http://localhost:8080/api/habits/user/${userId}`,{
         method: "POST",
         headers:{
             "Content-Type" : "application/json"
