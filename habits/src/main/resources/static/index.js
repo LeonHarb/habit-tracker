@@ -1,3 +1,5 @@
+const { use } = require("react");
+
 const habits = [{title : "Gym" , description : "Every day"}];
 
 
@@ -10,9 +12,13 @@ let habitToDeleteIndex = null;
 
 //GET all habits
 function loadHabits(){
-    fetch("http://localhost:8080/api/habits")
+    const userId = localStorage.getItem("loggedInUserId");
+    if (!userId) return;
+
+    fetch(`http://localhost:8080/api/habits/user/${userId}`)
         .then(response => response.json())
         .then(data =>{
+            habits.length = 0; 
             habits.push(...data);
             buildGrid();
             updateProgress();
@@ -368,17 +374,20 @@ document.getElementById("accountForm").addEventListener("submit", function(e){
         }
         return response.text();
     })
-    .then(message =>{
-        console.log("User saved:", message);
+    .then(user =>{
+        console.log("User saved:", user);
         alert("Account created successfully");
 
-        localStorage.setItem("loggedInUser", username);
+        localStorage.setItem("loggedInUser", user.username);
+        localStorage.setItem("loggedInUserId", user.id); 
+
 
         this.reset();
         document.getElementById("accountModal").style.display= "none";
 
         updateGreeting();
 
+        loadHabits();
         buildGrid();
         updateProgress();
         updateSidebar();
@@ -417,15 +426,18 @@ document.getElementById("loginForm").addEventListener("submit", function(e){
         }
         return response.text();
     })
-    .then(message =>{
-        console.log("User logged in successfully:", message);
+    .then(user =>{
+        console.log("User logged in successfully:", user);
 
-        localStorage.setItem("loggedInUser", username);
+        localStorage.setItem("loggedInUser", user.username);
+        localStorage.setItem("loggedInUserId", user.id); // Store user ID
+
         
         this.reset();
         document.getElementById("loginAccountModal").style.display= "none";
 
         updateGreeting();
+        loadHabits();
 
         buildGrid();
         updateProgress();
