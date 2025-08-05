@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.Customizer;
 
 @Configuration
 public class SecurityConfig {
@@ -21,9 +22,9 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/signup", "/api/auth/signin").permitAll()
-                .requestMatchers("/api/habits/**").permitAll() // ✅ Allow habit endpoints
                 .anyRequest().authenticated()
-            );
+            )
+            .httpBasic(Customizer.withDefaults()); // ✅ Modern way
 
         return http.build();
     }
