@@ -1,4 +1,3 @@
-const { use } = require("react");
 
 const habits = [{title : "Gym" , description : "Every day"}];
 
