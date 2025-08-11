@@ -1,0 +1,9 @@
+target/
+.idea/
+.vscode/
+*.log
+Thumbs.db
+desktop.ini
+*.pem
+*.key
+.mvn/wrapper/maven-wrapper.jar

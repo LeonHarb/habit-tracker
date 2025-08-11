@@ -33,6 +33,9 @@ public class HabitController {
     // Create habit
     @PostMapping
     public ResponseEntity<Habit> createHabit(@RequestBody Habit habit) {
+        if (habit.getTitle() == null || habit.getTitle().isBlank()) {
+            return ResponseEntity.badRequest().build(); // Validation: title is required
+        }
         Habit savedHabit = habitRepository.save(habit);
         return ResponseEntity.ok(savedHabit);
     }

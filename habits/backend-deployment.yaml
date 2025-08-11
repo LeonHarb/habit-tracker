@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: habit-tracker-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: habit-tracker-backend
+  template:
+    metadata:
+      labels:
+        app: habit-tracker-backend
+    spec:
+      containers:
+        - name: habit-tracker-backend
+          image: habit-tracker-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: habit-tracker-db-secret
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: habit-tracker-backend-service
+spec:
+  selector:
+    app: habit-tracker-backend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
