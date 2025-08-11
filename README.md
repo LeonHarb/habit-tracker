@@ -1,139 +1,139 @@
 # 🧠 Habit Tracker Web Application
 
-This Habit Tracker is a full-stack web application that allows users to create, manage, and track daily habits across a weekly grid. The app supports account creation, login/logout, and data persistence through a PostgreSQL database. It was deployed on **Chameleon Cloud** using **Docker** and **Kubernetes**.
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-brightgreen)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)
+![Docker](https://img.shields.io/badge/Docker-Enabled-blue)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Deployed-blue)
+![License](https://img.shields.io/badge/License-Academic-lightgrey)
+
+A **cloud-native full-stack habit tracker** that enables users to create, manage, and track daily habits across a weekly grid.  
+Built with **Java Spring Boot**, **PostgreSQL**, and a **vanilla HTML/CSS/JS frontend**, containerized with **Docker**, and deployed to a **Kubernetes cluster on Chameleon Cloud**.  
 
 ---
 
 ## 📌 Features
-
-- ✅ User Signup & Login (JWT Authentication)
+- ✅ **User Authentication** (Signup & Login with JWT)
 - ➕ Add, Edit, and Delete Habits
 - 📅 Weekly Habit Tracking Grid
-- 📈 Progress Bar and Summary Sidebar
-- 💾 Data persistence via PostgreSQL
-- 🌐 Deployed with Docker & Kubernetes on Chameleon Cloud
-- 🔒 Role-based API protection with Spring Security
+- 📈 Progress Bar & Summary Sidebar
+- 💾 Persistent Storage via PostgreSQL
+- 🌐 Containerized & Deployed on Chameleon Cloud (Kubernetes)
+- 🔒 Role-based API Security with Spring Security
 
 ---
 
 ## ⚙️ Tech Stack
-
 | Layer        | Technologies                                   |
 |--------------|------------------------------------------------|
 | Frontend     | HTML, CSS, JavaScript                          |
 | Backend      | Java, Spring Boot, Spring Security, JWT        |
 | Database     | PostgreSQL                                     |
 | DevOps       | Docker, Kubernetes, Helm, Chameleon Cloud      |
-| Tools        | VS Code, pgAdmin, Postman                      |
+| Tools        | VS Code, pgAdmin, Postman, Maven               |
 
 ---
 
 ## 🏗️ Project Architecture
-
 ```
 [ Browser ] ⇄ [ HTML/CSS/JS ] ⇄ [ Spring Boot REST API ] ⇄ [ PostgreSQL DB ]
                          ↑              ↑
                  Chameleon Cloud     Kubernetes Cluster
 ```
-
-- Frontend makes API requests to backend endpoints.
-- Backend handles user auth and CRUD operations on habits.
-- PostgreSQL persists user and habit data.
-- Docker containerizes services.
-- Kubernetes manages deployment and networking on Chameleon Cloud.
+- **Frontend** calls backend REST endpoints for CRUD operations.
+- **Backend** handles user authentication & business logic.
+- **PostgreSQL** stores user and habit data.
+- **Docker** containerizes services for consistency.
+- **Kubernetes** manages deployment, scaling, and networking.
 
 ---
 
-## 🚀 How to Run Locally
+## 🚀 Local Setup
 
-### 1. Clone the repo:
+### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/your-username/habit-tracker.git
-cd habit-tracker
+git clone https://github.com/LeonHarb/habit-tracker.git
+cd habit-tracker/habits
 ```
 
-### 2. Setup Backend
-
+### 2️⃣ Backend Setup
 ```bash
-cd backend
 mvn clean package -DskipTests
 java -jar target/habits-0.0.1-SNAPSHOT.jar
 ```
 
-### 3. Run Frontend
-
-Open `frontend/index.html` in any browser.
+### 3️⃣ Frontend Setup
+Open:
+```
+src/main/resources/static/index.html
+```
+in your browser.
 
 ---
 
-## ☁️ How to Deploy on Chameleon Cloud
-
-1. **SSH into the instance**
+## ☁️ Deployment on Chameleon Cloud
+1. **SSH into your instance**  
 ```bash
 ssh -i group8.pem cc@<INSTANCE_IP>
 ```
-
-2. **Run Kubernetes Commands**
+2. **Apply Kubernetes manifests**  
 ```bash
 kubectl apply -f postgres-deployment.yaml
 kubectl apply -f backend-deployment.yaml
 kubectl apply -f backend-service.yaml
 ```
-
-3. **Port Forwarding (if needed)**
+3. **(Optional) Port Forward**  
 ```bash
 kubectl port-forward service/habit-tracker-backend-service 8080:8080
 ```
-
-4. **Open in Browser**
+4. **Access in Browser**  
 ```
 http://<INSTANCE_PUBLIC_IP>:<NODE_PORT>/index.html
 ```
 
 ---
 
-## 🧪 API Testing (Postman)
-
-| Endpoint                | Method | Description               |
-|-------------------------|--------|---------------------------|
-| `/api/auth/signup`      | POST   | Register new user         |
-| `/api/auth/signin`      | POST   | Login existing user       |
-| `/api/habits`           | GET    | Get all habits            |
-| `/api/habits`           | POST   | Add new habit             |
-| `/api/habits/{id}`      | PUT    | Edit habit by ID          |
-| `/api/habits/{id}`      | DELETE | Delete habit by ID        |
+## 🧪 API Endpoints
+| Endpoint                | Method | Description         |
+|-------------------------|--------|---------------------|
+| `/api/auth/signup`      | POST   | Register new user   |
+| `/api/auth/signin`      | POST   | Login existing user |
+| `/api/habits`           | GET    | Get all habits      |
+| `/api/habits`           | POST   | Add new habit       |
+| `/api/habits/{id}`      | PUT    | Edit habit by ID    |
+| `/api/habits/{id}`      | DELETE | Delete habit by ID  |
 
 ---
 
 ## 📸 Screenshots
+*(Replace these with actual image URLs in your repo’s `/screenshots` folder so they display inline)*
 
-(See `screenshots/` folder)
-
-- Home Page UI
-- Habit Grid Interface
-- pgAdmin database view
-- Postman API test results
-- Chameleon terminal output
-- Kubernetes pods/services
+- ![Home Page UI](screenshots/home.png)
+- ![Habit Grid Interface](screenshots/grid.png)
+- ![pgAdmin View](screenshots/pgadmin.png)
+- ![Postman Tests](screenshots/postman.png)
+- ![Kubernetes Pods](screenshots/k8s.png)
 
 ---
 
-## 🎥 Project Demo
-
-Watch the full 10-minute demo video here:  
-**[📺 Demo Video Link]** https://drive.google.com/file/d/1g3ZacEORZSPgImfUgNXgT8TbYPLaAWLu/view?usp=sharing
+## 🎥 Demo
+▶ **[Watch 10-Minute Demo Video](https://drive.google.com/file/d/1g3ZacEORZSPgImfUgNXgT8TbYPLaAWLu/view?usp=sharing)**
 
 ---
 
 ## 👨‍💻 Contributors
+- **Leon Harb** – Backend Development, Deployment
+- **Joseph Nwanebi** – Frontend Development
+- **John Leura** – DevOps & Deployment
 
-- **Leon Harb** – Backend Developer, Deployment Help  
-- **Joseph Nwanebi** – Frontend Developer
-- **John Leura** – Deployment, DevOps
 ---
 
 ## 📄 License
-
-This project was completed as part of the **Cloud Computing course (CS 4843)** at **UTSA – Summer 2025**.
+This project was developed for the **Cloud Computing course (CS 4843)** at **UTSA – Summer 2025**.
 
 ---
+
+## 📬 Connect
+📧 **Email:** leon.s.harb@gmail.com  
+💼 **LinkedIn:** [linkedin.com/in/leonharb](https://www.linkedin.com/in/leonharb)  
+🐙 **GitHub:** [github.com/LeonHarb](https://github.com/LeonHarb)
