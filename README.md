@@ -108,11 +108,10 @@ http://<INSTANCE_PUBLIC_IP>:<NODE_PORT>/index.html
 ## 📸 Screenshots
 *(Replace these with actual image URLs in your repo’s `/screenshots` folder so they display inline)*
 
-- ![Home Page UI](screenshots/home.png)
-- ![Habit Grid Interface](screenshots/grid.png)
-- ![pgAdmin View](screenshots/pgadmin.png)
-- ![Postman Tests](screenshots/postman.png)
-- ![Kubernetes Pods](screenshots/k8s.png)
+- ![Home Page UI](https://drive.google.com/file/d/13yLpYhdJBnVa4u1d2nLk_5vh8fqgRFL4/view?usp=sharing)
+- ![PostgreSQL pgAdmin View](https://drive.google.com/drive/folders/1X1A0okC0CJ69rjWnFbYdk94d6iq7dquO?usp=drive_link)
+- ![Postman Tests](https://drive.google.com/drive/folders/1W3M9R-RShtQ2nngjMrFzvAFKaacMBIsL?usp=drive_link)
+- ![Kubernetes Pods](https://drive.google.com/file/d/1slOp_sLDCKZ_aXmlov9N6MPAuouxXcdp/view?usp=sharing)
 
 ---
 
